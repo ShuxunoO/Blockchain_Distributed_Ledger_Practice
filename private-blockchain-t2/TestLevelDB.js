@@ -1,11 +1,12 @@
-const SHA256 = require('crypto-js/sha256');
+const SHA256 = require("crypto-js/sha256");
 const LevelDB = require("./LevelDB");
 const levelDB = new LevelDB("test_level");
 
 async function TestLevelDB() {
-  //   await testGetLevelDBData();
-    await testAddLevelDBDataWithKey();
-//   await testGetBlocksCount();
+  await testGetLevelDBData();
+  await testAddLevelDBDataWithKey();
+  await testGetBlocksCount();
+  await testAddLevelDBData();
 }
 TestLevelDB();
 
@@ -22,7 +23,9 @@ async function testGetLevelDBData() {
 
 async function testAddLevelDBDataWithKey() {
   try {
-    const block = await levelDB.addLevelDBData(SHA256(`${Math.random()}`).toString());
+    const block = await levelDB.addLevelDBData(
+      SHA256(`${Math.random()}`).toString()
+    );
     console.log("testAddLevelDBDataWithKey | Value:", block);
   } catch (error) {
     console.log("testAddLevelDBDataWithKey | Err:", error);
@@ -38,15 +41,13 @@ async function testGetBlocksCount() {
   }
 }
 
-function testAddLevelDBData() {
-  levelDB
-    .addLevelDBData("test data")
-    .then((value) => {
-      console.log("testAddLevelDBData | Success, value:", value);
-    })
-    .catch((err) => {
-      console.log("testAddLevelDBData | Err:", err);
-    });
+async function testAddLevelDBData() {
+  try {
+    const value = await levelDB.addLevelDBData("test data");
+    console.log("testAddLevelDBData | Success, value:", value);
+  } catch (error) {
+    console.log("testAddLevelDBData | Err:", error);
+  }
 }
 
 /**
