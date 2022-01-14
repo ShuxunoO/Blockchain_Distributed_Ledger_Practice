@@ -13,9 +13,8 @@ class LevelDB {
 
   // Add data to levelDB with key and value
   async addLevelDBDataWithKey(key, value) {
-    let val = ''
     try {
-      val = await this.db.put(key, value)
+      await this.db.put(key, value)
       console.log(
         "addLevelDBDataWithKey | Successful, key:",
         key,
@@ -25,7 +24,7 @@ class LevelDB {
     } catch (error) {
       console.log("addLevelDBDataWithKey | Failed:", error);
     }
-    return val
+    return this.getBlocksCount()
   }
 
   // Add data to levelDB with value
