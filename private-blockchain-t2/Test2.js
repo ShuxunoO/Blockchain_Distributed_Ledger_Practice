@@ -9,14 +9,14 @@ async function test2() {
    * Test only one function once time
    * Comment all test statements when test the others *.js code
    */
-  
-  // await theLoop(0);
-  // await testGenerateGenesisBlock();
-  // await testGetBlockHeight()
-  // await testGetBlock(5);
-  // await testAddBlock();
-  // await tamperBlock(5);
-  // await testValidateBlock(5);
+
+  await theLoop(0);
+  await testGenerateGenesisBlock();
+  await testGetBlockHeight();
+  await testGetBlock(5);
+  await testAddBlock();
+  await tamperBlock(5);
+  await testValidateBlock(5);
   await testValidateChain();
 }
 test2();
@@ -25,12 +25,12 @@ test2();
  * Test codes below
  */
 async function testGenerateGenesisBlock() {
-  const block = await blockchain.getBlock(0)
+  const block = await blockchain.getBlock(0);
   console.log("testGenerateGenesisBlock | Successful, genesis block:", block);
 }
 
 async function testGetBlockHeight() {
-  const height = await blockchain.getBlockHeight()
+  const height = await blockchain.getBlockHeight();
   console.log("testGetBlockHeight | Successful, blockchain height:", height);
 }
 
@@ -65,10 +65,10 @@ async function testValidateChain() {
 async function theLoop(i) {
   setTimeout(async function () {
     let blockTest = new Block("Test Block - " + (i + 1));
-    const height = await blockchain.addBlock(blockTest)
+    const height = await blockchain.addBlock(blockTest);
     console.log("theLoop | block height:", height);
-    if (++i < 3) theLoop(i);
-  }, 10 * 10);
+    if (++i < 10) theLoop(i);
+  }, 10 * 1000);
 }
 
 // Tampering a Block for the purpose of testing the validation methods

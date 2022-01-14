@@ -30,8 +30,7 @@ class Blockchain {
   async addBlock(block) {
     block.height = await this.getBlockHeight();
     block.time = new Date().getTime().toString().slice(0, -3);
-    block.previousBlockHash = (await this.getBlock(block.height - 1)).hash
-    
+    block.previousBlockHash = (await this.getBlock(block.height - 1)).hash;
     block.hash = SHA256(JSON.stringify(block)).toString();
     return this.db.addLevelDBDataWithKey(block.height, JSON.stringify(block));
   }
@@ -57,11 +56,7 @@ class Blockchain {
       block.hash = "";
       let validBlockHash = SHA256(JSON.stringify(block)).toString();
       block.hash = blockHash;
-      // console.log('-',i + 1)
-      console.log('-',validBlockHash)
-      console.log('-',blockHash)
       if (validBlockHash === blockHash) {
-        console.log(true)
         return { isValidBlock: true, block: block };
       } else {
         console.log(
@@ -84,7 +79,6 @@ class Blockchain {
         // Validate block
         let i = j;
         self.validateBlock(i).then(({ isValidBlock, block }) => {
-          console.log(block)
           if (!isValidBlock) {
             errorLog.push(i);
           }
@@ -94,7 +88,6 @@ class Blockchain {
             self.getBlock(i + 1).then((followingBlock) => {
               let previousHash = followingBlock.previousBlockHash;
               if (blockHash !== previousHash) {
-                console.log(i)
                 errorLog.push(i);
               }
             });
