@@ -22,7 +22,7 @@ async function testGetLevelDBData() {
 
 async function testAddLevelDBDataWithKey() {
   try {
-    const block = await levelDB.addLevelDBData(SHA256(`${Math.random()}`));
+    const block = await levelDB.addLevelDBData(SHA256(`${Math.random()}`).toString());
     console.log("testAddLevelDBDataWithKey | Value:", block);
   } catch (error) {
     console.log("testAddLevelDBDataWithKey | Err:", error);

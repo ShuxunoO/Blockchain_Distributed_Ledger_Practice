@@ -12,23 +12,20 @@ class LevelDB {
   }
 
   // Add data to levelDB with key and value
-  addLevelDBDataWithKey(key, value) {
-    let self = this;
-    return new Promise(function (resolve, reject) {
-      self.db.put(key, value, function (err) {
-        if (err) {
-          reject(err);
-          return console.log("addLevelDBDataWithKey | Failed:", err);
-        }
-        console.log(
-          "addLevelDBDataWithKey | Successful, key:",
-          key,
-          "value:",
-          value
-        );
-        resolve(value);
-      });
-    });
+  async addLevelDBDataWithKey(key, value) {
+    let val = ''
+    try {
+      val = await this.db.put(key, value)
+      console.log(
+        "addLevelDBDataWithKey | Successful, key:",
+        key,
+        "value:",
+        value
+      );
+    } catch (error) {
+      console.log("addLevelDBDataWithKey | Failed:", error);
+    }
+    return val
   }
 
   // Add data to levelDB with value
@@ -45,10 +42,10 @@ class LevelDB {
   }
 
   // Method that return the height
-  getBlocksCount() {
-    let self = this;
-    var i = 0;
-    return new Promise(function (resolve, reject) {
+  async getBlocksCount() {
+    const self = this;
+    let i = 0;
+    await new Promise(function (resolve, reject) {
       self.db
         .createReadStream()
         .on("data", function (data) {
@@ -63,6 +60,7 @@ class LevelDB {
           resolve(i);
         });
     });
+    return i
   }
 }
 
